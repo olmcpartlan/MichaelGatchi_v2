@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from 'react-native';
 import Actions from "./Components/actions";
 import Stats from "./Components/stats";
-import VictoryOverlay from "./Components/victoryOverlay"
-import LossOverlay from "./Components/lossOverlay"
+import VictoryOverlay from "./Components/victoryOverlay";
+import LossOverlay from "./Components/lossOverlay";
+import OpeningOverlay from "./Components/openingOverlay";
+import { Dimensions } from "react-native";
 
 
 export default class App extends Component {
@@ -22,13 +24,17 @@ export default class App extends Component {
       meals: 3,
       victory: false,
       loss: false,
-      message: ""
+      opening: true,
+      message: "",
+      image: require("./Images/michael1.gif")
 
     }
     this._workHandler = this._workHandler.bind(this)
     this._playHandler = this._playHandler.bind(this)
     this._eatHandler = this._eatHandler.bind(this)
     this._sleepHandler = this._sleepHandler.bind(this)
+    this._closeOpening = this._closeOpening.bind(this)
+    this._restart = this._restart.bind(this)
 
   }
   _workHandler = (changeVal) => {
@@ -37,7 +43,8 @@ export default class App extends Component {
       let newMeal = this.state.meals -= 1;
       this.setState({
         meals: newMeal,
-        message: "Michael has to go on a sales call with Andy. +0 energy, -1 meals"
+        message: "Michael has to go on a sales call with Andy. +0 energy, -1 meals",
+        image: require("./Images/michael4.gif")
       });
     }
     else {
@@ -47,7 +54,8 @@ export default class App extends Component {
       this.setState({
         energy: newVal,
         meals: newMeal,
-        message: `Michael had a great day at work! +${changeVal} energy, ${randMeal} meals.`
+        message: `Michael had a great day at work! +${changeVal} energy, ${randMeal} meals.`,
+        image: require("./Images/michael5.gif")
       });
     }
 
@@ -59,7 +67,8 @@ export default class App extends Component {
     let negChance = Math.floor(Math.random() * 3)+1;
     if(negChance == 3) {
       this.setState({
-        message: "Michael said an offensive joke so Toby called a meeting. -5 happiness"
+        message: "Michael said an offensive joke so Toby called a meeting. -5 happiness",
+        image: require("./Images/michael2.gif")
       });
     }
     else {
@@ -69,7 +78,9 @@ export default class App extends Component {
       this.setState({
         energy: newVal,
         happiness: newPlay,
-        message: `Michael played a prank on Dwight! +${randPlay} happiness, +${changeVal} energy`
+        message: `Michael played a prank on Dwight! +${randPlay} happiness, -${changeVal} energy`,
+        image: require("./Images/michael3.gif")
+
       });
 
     }
@@ -86,7 +97,8 @@ export default class App extends Component {
       this.setState({
         fullness: newVal,
         meals: removeMeal,
-        message: `Michael had a great meal, +${changeVal} fullness, -1 meals`
+        message: `Michael had a great meal, +${changeVal} fullness, -1 meals`,
+        image: require("./Images/michael6.gif")
       });
       this.victoryCheck();
       this.lossCheck();
@@ -99,7 +111,8 @@ export default class App extends Component {
     this.setState({
       energy: newEnergy,
       fullness: newFullness,
-      message: `Michael had a great dream about Holly, +${changeVal} energy, -${newFullness}`
+      message: `Michael had a great dream about Holly, +${changeVal} energy, -${newFullness}`,
+      image: require("./Images/michael7.gif")
     });
     this.victoryCheck();
     this.lossCheck();
@@ -121,15 +134,39 @@ export default class App extends Component {
     }
   }
 
+  _closeOpening = () => {
+    this.setState({
+      opening: false
+    })
+  }
+
+  _restart= () => {
+    this.setState({
+      happiness: 50,
+      fullness: 20,
+      energy: 50,
+      meals: 3,
+      victory: false,
+      loss: false,
+      opening: false,
+      message: "",
+      image: require("./Images/michael1.gif")
+
+    });
+  }
+
 
   render() {
+
     return (
       <View style={styles.container}>
-      <VictoryOverlay visibility={this.state.victory} />
-      <LossOverlay visibility={this.state.loss} />
-        <Image source={require("./Images/giphy.gif")} />
+      <OpeningOverlay visibility={this.state.opening} close={this._closeOpening} />
+      <VictoryOverlay visibility={this.state.victory} close={this._restart}/>
+      <LossOverlay visibility={this.state.loss} close={this._restart}/>
+        <Image style={styles.image} source={this.state.image} />
 
-        <Stats happiness={this.state.happiness} happiness={this.state.happiness} fullness={this.state.fullness} energy={this.state.energy} meals={this.state.meals}/>
+
+        <Stats style={styles.stats} happiness={this.state.happiness} happiness={this.state.happiness} fullness={this.state.fullness} energy={this.state.energy} meals={this.state.meals}/>
 
         <Text style={styles.message}>{this.state.message}</Text>
 
@@ -138,26 +175,35 @@ export default class App extends Component {
         playHandler={ this._playHandler } eatHandler={ this._eatHandler } sleepHandler={ this._sleepHandler }  happiness={this.state.happiness} fullness={this.state.fullness} energy={this.state.energy} meals={this.state.meals}/>
 
 
-        <Button onPress={() => this.onPressAction()} title="press bitch"></Button>
-
+        <Button onPress={() => this.onPressAction()} title="rebuild"></Button>
 
       </View>
     );
   }
 }
+//const screenWidth = Math.round(Dimensions.get('window').width);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
-    // justifyContent: 'center',
+
   },
   actions: {
     marginTop: 5
   },
   message: {
-    margin: 10
+    margin: 10,
+    color: 'white'
+  },
+  image: {
+    margin: 33,
+    height: 200,
+    width: Math.round(Dimensions.get('window').width)
+  },
+  stats: {
+    color: 'white'
   }
 
 
