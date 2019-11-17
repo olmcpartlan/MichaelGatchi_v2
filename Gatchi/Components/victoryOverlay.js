@@ -3,11 +3,18 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from 'react-n
 import { Overlay } from 'react-native-elements';
 
 export default class VictoryOverlay extends Component {
+  constructor() {
+    super();
+    this.state = {
+      image: require("../Images/michael9.gif")
+    }
+  }
   render() {
     return (
       <Overlay isVisible={this.props.visibility}>
       <View style={styles.container}>
         <Text>Victory Overlay!</Text>
+          <Image source={this.state.image} style={styles.image}/> 
           <TouchableOpacity style={styles.button} onPress={() => this.props.close()}>
             <Text style={styles.text}>Restart</Text>
           </TouchableOpacity>
@@ -31,5 +38,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize:30,
+  },
+  image: {
+    width: 275
   }
 });

@@ -43,7 +43,7 @@ export default class App extends Component {
       let newMeal = this.state.meals -= 1;
       this.setState({
         meals: newMeal,
-        message: "Michael has to go on a sales call with Andy. +0 energy, -1 meals",
+        message: "Michael has to go on a sales call with Andy.\n +0 energy, -1 meals",
         image: require("./Images/michael4.gif")
       });
     }
@@ -54,7 +54,7 @@ export default class App extends Component {
       this.setState({
         energy: newVal,
         meals: newMeal,
-        message: `Michael had a great day at work! +${changeVal} energy, ${randMeal} meals.`,
+        message: `Michael had a great day at work!\n -${changeVal} energy, ${randMeal} meals.`,
         image: require("./Images/michael5.gif")
       });
     }
@@ -67,7 +67,7 @@ export default class App extends Component {
     let negChance = Math.floor(Math.random() * 3)+1;
     if(negChance == 3) {
       this.setState({
-        message: "Michael said an offensive joke so Toby called a meeting. -5 happiness",
+        message: "Michael said an offensive joke so Toby called a meeting.\n -5 happiness",
         image: require("./Images/michael2.gif")
       });
     }
@@ -78,7 +78,7 @@ export default class App extends Component {
       this.setState({
         energy: newVal,
         happiness: newPlay,
-        message: `Michael played a prank on Dwight! +${randPlay} happiness, -${changeVal} energy`,
+        message: `Michael played a prank on Dwight!\n +${randPlay} happiness, -${changeVal} energy`,
         image: require("./Images/michael3.gif")
 
       });
@@ -97,7 +97,7 @@ export default class App extends Component {
       this.setState({
         fullness: newVal,
         meals: removeMeal,
-        message: `Michael had a great meal, +${changeVal} fullness, -1 meals`,
+        message: `Michael had a great meal,\n +${changeVal} fullness, -1 meals`,
         image: require("./Images/michael6.gif")
       });
       this.victoryCheck();
@@ -111,7 +111,7 @@ export default class App extends Component {
     this.setState({
       energy: newEnergy,
       fullness: newFullness,
-      message: `Michael had a great dream about Holly, +${changeVal} energy, -${newFullness}`,
+      message: `Michael had a great dream about Holly,\n +${changeVal} energy, -5 fullness`,
       image: require("./Images/michael7.gif")
     });
     this.victoryCheck();
@@ -129,7 +129,8 @@ export default class App extends Component {
   lossCheck = () => {
     if(this.state.fullness <= 0 || this.state.happiness <= 0 || this.state.happiness <= 0) {
       this.setState({
-        loss: true
+        loss: true,
+        image: 8
       })
     }
   }
@@ -160,9 +161,9 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
-      <OpeningOverlay visibility={this.state.opening} close={this._closeOpening} />
-      <VictoryOverlay visibility={this.state.victory} close={this._restart}/>
-      <LossOverlay visibility={this.state.loss} close={this._restart}/>
+      <OpeningOverlay visibility={this.state.opening} close={this._closeOpening} image = {this.state.image}/>
+      <VictoryOverlay visibility={this.state.victory} close={this._restart} image = {this.state.image}/>
+      <LossOverlay visibility={this.state.loss} close={this._restart} image = {this.state.image}/>
         <Image style={styles.image} source={this.state.image} />
 
 
@@ -175,7 +176,6 @@ export default class App extends Component {
         playHandler={ this._playHandler } eatHandler={ this._eatHandler } sleepHandler={ this._sleepHandler }  happiness={this.state.happiness} fullness={this.state.fullness} energy={this.state.energy} meals={this.state.meals}/>
 
 
-        <Button onPress={() => this.onPressAction()} title="rebuild"></Button>
 
       </View>
     );
@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
   },
   message: {
     margin: 10,
-    color: 'white'
+    color: 'white',
+    fontSize: 25
   },
   image: {
     margin: 33,
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
     width: Math.round(Dimensions.get('window').width)
   },
   stats: {
-    color: 'white'
+    height: 40
   }
 
 

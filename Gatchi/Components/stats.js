@@ -15,10 +15,15 @@ constructor() {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Happiness: {this.props.happiness}</Text>
-        <Text style={styles.text}>Fullness: {this.props.fullness}</Text>
-        <Text style={styles.text}>Energy: {this.props.energy}</Text>
-        <Text style={styles.text}>Meals: {this.props.meals}</Text>
+        <View style={styles.col}>
+          <Text style={styles.text}>Happiness: {this.props.happiness}</Text>
+          <Text style={styles.text}>Fullness: {this.props.fullness}</Text>
+        </View>
+        <View>
+          <Text style={styles.text}>Energy: {this.props.energy}</Text>
+          <Text style={styles.text}>Meals: {this.props.meals}</Text>
+
+        </View>
 
 
       </View>
@@ -30,9 +35,14 @@ constructor() {
 const styles = StyleSheet.create ({
   container: {
     margin: 50,
+    flexDirection: 'row'
+  },
+  col: {
+    marginRight: 15
   },
   text: {
-    color: 'white'
+    color: 'white',
+    fontSize:25,
   }
 
 });

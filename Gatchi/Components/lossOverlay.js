@@ -3,14 +3,21 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, Button } from 'react-n
 import { Overlay } from 'react-native-elements';
 
 export default class LossOverlay extends Component {
+  constructor() {
+    super();
+    this.state = {
+      image: require("../Images/michael8.gif")
+    }
+  }
   render() {
     return (
       <Overlay isVisible={this.props.visibility}>
         <View style={styles.container}>
-        <Text>Loss Overlay!</Text>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.close()}>
-            <Text style={styles.text}>Restart</Text>
-          </TouchableOpacity>
+          <Text>Loss Overlay!</Text>
+          <Image source={this.state.image} style={styles.image} />
+            <TouchableOpacity style={styles.button} onPress={() => this.props.close()}>
+              <Text style={styles.text}>Restart</Text>
+            </TouchableOpacity>
         </View>
 
       </Overlay>
@@ -33,5 +40,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize:30,
+  },
+  image: {
+    width: 275,
+    alignItems: 'center'
   }
 });
