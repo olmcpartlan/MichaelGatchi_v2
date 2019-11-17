@@ -1,5 +1,5 @@
 ### MichaelGatchi_v2
-** Help Michael make it to the weekend!**
+**Help Michael make it to the weekend!**
 
 ##### Instructions
 - You need to help Michael get his Health or Fullness to 100.
