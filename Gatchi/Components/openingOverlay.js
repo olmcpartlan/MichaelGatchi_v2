@@ -8,9 +8,14 @@ export default class OpeningOverlay extends Component {
     return(
       <Overlay isVisible={this.props.visibility}>
         <View style={styles.container}>
-        <Text>Opening Overlay!</Text>
+          <Text style={styles.text}>Welcome to MichaelGatchi_v2!</Text>
+          <Text>Help Michael make it to the weekend by getting his Happiness or Fullness to 100!</Text>
+          <Text>Working will take energy, but Michael will earn meals </Text>
+          <Text>Playing will increase happiness, but take energy</Text>
+          <Text>Eating will replenish fullness, but don't forget Michael needs meals before he can eat!</Text>
+          <Text>Sleeping will replenish energy, but he will be hungry when he wakes up.</Text>
           <TouchableOpacity style={styles.button} onPress={() => this.props.close()}>
-            <Text style={styles.text}>Press to Close</Text>
+            <Text style={styles.text}>Start!</Text>
           </TouchableOpacity>
         </View>
 
@@ -27,7 +32,8 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 150,
     alignItems: 'center',
-    backgroundColor: 'grey',
+    backgroundColor: 'green',
+    borderRadius: 50
 
   },
   text: {
